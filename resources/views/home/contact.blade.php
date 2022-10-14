@@ -1,6 +1,6 @@
 @extends('layouts.home')
 
-@section('title', 'About Us -' . $setting->title)
+@section('title', 'Contact -' . $setting->title)
 
 @section('description')
     {{$setting->description}}
@@ -14,7 +14,7 @@
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="{{route('home')}}">Home</a></li>
-            <li class="active">About Us</li>
+            <li class="active">Contact</li>
         </ul>
     </div>
 </div>
@@ -26,7 +26,17 @@
     <div class="container">
         <!-- row -->
         <div class="row">
-            {!! $setting->aboutus !!}
+            <div class="col-md-8">
+                <h3 class="aside-title">İletişim Bilgileri</h3>
+
+                {!! $setting->contact !!}
+            </div>
+
+            <div class="col-md-4">
+                <h3 class="aside-title">İletişim Formu</h3>
+
+            </div>
+            
         </div>
         <!-- /row -->
     </div>
