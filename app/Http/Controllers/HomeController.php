@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Setting;
 use App\Models\Message;
 use App\Models\Product;
+use App\Models\Image;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -33,14 +34,14 @@ class HomeController extends Controller
         'page'=>'home'
         ];
 
-        return view('home.index', $data );// sadece anasayfada page değişkeni dolu gidiyo bu sayede bu değişkenin gittiği yerin anasayfa olduğunu anlıyoruz
+        return view('home.index', ['data'=>$data] );// sadece anasayfada page değişkeni dolu gidiyo bu sayede bu değişkenin gittiği yerin anasayfa olduğunu anlıyoruz
     }
 
-    public function product($id, $slug)
+    public function product($id, $slug) // ürün detay sayfası için
     {
         $data = Product::find($id);
-        print_r($data);
-        exit();
+        $datalist = Image::where('product_id', $id)->get();//detay resimleri için id si bu id olanlar
+        return view('home.product_detail', ['data'=>$data, 'datalist'=>$datalist] );
 
     }
 
