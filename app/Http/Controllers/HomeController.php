@@ -44,6 +44,15 @@ class HomeController extends Controller
 
     }
 
+    public function categoryproducts($id, $slug)
+    {
+        $datalist = Product::where('category_id', $id)->get();// category id si gelen id ye eşit olan ürünler.
+        $data = Category::find($id);// gelen id ye ait kategorinin bilgileri
+        return view('home.category_products', ['data'=>$data, 'datalist'=>$datalist]);
+
+
+    }
+
     public function aboutus()
     {
         $setting = Setting::first();
