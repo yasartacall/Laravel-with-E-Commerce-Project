@@ -26,14 +26,44 @@
     <div class="container">
         <!-- row -->
         <div class="row">
-            <div class="col-md-8">
-                <h3 class="aside-title">İletişim Bilgileri</h3>
+            <div class="col-md-7">
+                <h3 class="section-title">İletişim Bilgileri</h3>
 
                 {!! $setting->contact !!}
             </div>
 
-            <div class="col-md-4">
-                <h3 class="aside-title">İletişim Formu</h3>
+            <div class="col-md-5">
+                <h3 class="section-title">İletişim Formu</h3>
+                @include('home.message')
+
+                <form id="checkout-form" class="clearfix" action="{{route('sendmessage')}} " method="POST">
+                        @csrf
+						<div class="billing-details">
+							
+							<div class="form-group">
+								<input class="input" type="text" name="name" placeholder="Name & Surname">
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="phone" placeholder="Phone Number">
+							</div>
+							<div class="form-group">
+								<input class="input" type="email" name="email" placeholder="Email">
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="subject" placeholder="Subject">
+							</div>
+                            <div class="form-group">
+                                <textarea name="message" class="input" placeholder="Your message"  rows="5"></textarea>
+								
+							</div>
+							
+
+                            <div class="pull-right">
+								<button type="submit" class="primary-btn">Send Message</button>
+							</div>
+						</div>
+					</div>
+                
 
             </div>
             

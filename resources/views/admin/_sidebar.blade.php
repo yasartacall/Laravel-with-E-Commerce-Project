@@ -50,6 +50,13 @@
                 Products    
             </a>
           </li>
+
+          <li class="nav-item has-treeview">
+            <a href="{{ route('admin_message') }}" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+                Contact Messages    
+            </a>
+          </li>
         
           <li class="nav-item">
             <a href="#" class="nav-link">
