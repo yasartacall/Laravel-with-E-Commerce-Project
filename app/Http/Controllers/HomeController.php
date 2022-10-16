@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Setting;
 use App\Models\Message;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -23,7 +24,24 @@ class HomeController extends Controller
     public function index()
     {
         $setting = Setting::first();
-        return view('home.index', ['setting'=>$setting, 'page'=>'home']);// sadece anasayfada page değişkeni dolu gidiyo bu sayede bu değişkenin gittiği yerin anasayfa olduğunu anlıyoruz
+        $slider = Product::select('id','title','image','price','slug')->limit(4)->get();
+        #print_r($slider);
+        #exit();
+        $data = [
+        'setting'=>$setting,
+        'slider'=>$slider,
+        'page'=>'home'
+        ];
+
+        return view('home.index', $data );// sadece anasayfada page değişkeni dolu gidiyo bu sayede bu değişkenin gittiği yerin anasayfa olduğunu anlıyoruz
+    }
+
+    public function product($id, $slug)
+    {
+        $data = Product::find($id);
+        print_r($data);
+        exit();
+
     }
 
     public function aboutus()

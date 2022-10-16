@@ -5,37 +5,29 @@
         <!-- home wrap -->
         <div class="home-wrap">
             <!-- home slick -->
+
             <div id="home-slick">
-                <!-- banner -->
-                <div class="banner banner-1">
-                    <img src="{{ asset('assets') }}/img/banner01.jpg" alt="">
-                    <div class="banner-caption text-center">
-                        <h1>Bags sale</h1>
-                        <h3 class="white-color font-weak">Up to 50% Discount</h3>
-                        <button class="primary-btn">Shop Now</button>
-                    </div>
-                </div>
-                <!-- /banner -->
+                @php
+                    $i = 0;  
+                @endphp
 
+                @foreach ($slider as $rs)
+                @php
+                    $i = $i + 1;
+                @endphp
                 <!-- banner -->
-                <div class="banner banner-1">
-                    <img src="{{ asset('assets') }}/img/banner02.jpg" alt="">
-                    <div class="banner-caption">
-                        <h1 class="primary-color">HOT DEAL<br><span class="white-color font-weak">Up to 50% OFF</span></h1>
-                        <button class="primary-btn">Shop Now</button>
+                <div class="banner banner-1 @if ($i == 1) active  @endif ">
+                    <img src="{{Storage::url($rs->image)}}" style="height: 500px" alt="">
+                   
+                    <div class="banner-caption text-center" >
+                        <h3 style="color: beige">{{$rs->title}}</h3>
+                        <h3 class="white-color font-weak">{{$rs->price}}</h3>
+                        <a href="{{route('product', [ 'id' => $rs->id, 'slug' => $rs->slug ])}} " class="primary-btn">Shop Now</a>
                     </div>
                 </div>
                 <!-- /banner -->
+                @endforeach
 
-                <!-- banner -->
-                <div class="banner banner-1">
-                    <img src="{{ asset('assets') }}/img/banner03.jpg" alt="">
-                    <div class="banner-caption">
-                        <h1 class="white-color">New Product <span>Collection</span></h1>
-                        <button class="primary-btn">Shop Now</button>
-                    </div>
-                </div>
-                <!-- /banner -->
             </div>
             <!-- /home slick -->
         </div>
