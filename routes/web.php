@@ -17,6 +17,9 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/sendmessage', [HomeController::class, 'sendmessage'])->name('sendmessage');
 Route::get('/product/{id}/{slug}', [HomeController::class, 'product'])->name('product');
 Route::get('/categoryproducts/{id}/{slug}', [HomeController::class, 'categoryproducts'])->name('categoryproducts');
+//Route::get('/addtocart/{id}', [HomeController::class, 'addtocart'])->name('addtocart');
+Route::post('/getproduct', [HomeController::class, 'getproduct'])->name('getproduct');
+Route::post('/productlist{search}', [HomeController::class, 'productlist'])->name('productlist');
 
 
 // Route::get('/test/{id}', [HomeController::class, 'test'])->where('id','[0-9]+');// parametre alıyor test metodu ile ve where ile sayısal değer olmmasını sağladık

@@ -45,14 +45,37 @@ class HomeController extends Controller
 
     }
 
-    public function categoryproducts($id, $slug)
+    public function getproduct(Request $request)
     {
-        $datalist = Product::where('category_id', $id)->get();// category id si gelen id ye eşit olan ürünler.
-        $data = Category::find($id);// gelen id ye ait kategorinin bilgileri
-        return view('home.category_products', ['data'=>$data, 'datalist'=>$datalist]);
+        $search=$request->input('search');
 
-
+        $count = Product::where('title', 'like', '%'.$search.'%')->get()->count();
+        if ($count==1) // gelen search sorgusuna uyan ürün bi tane ise  sorgumuuzu yapıp productdetaile yolladık yukarıya
+        {
+            $data = Product::where('title', 'like', '%'.$search.'%')->first();
+            return redirect()->route('product',['id'=>$data->id,'slug'=>$data->slug]);
+        }
+        else // birden fazla ürün var ise productlist fonk. a yollluyoruz
+        {
+            return redirect()->route('productlist',['search'=>$search]);
+        }
     }
+
+    public function productlist($search) //gelen searchü sorguluyoruz tekrar
+    {
+        $datalist =Product::where('title', 'like', '%'.$search.'%')->get();
+        return view('home.search_products',['search'=>$search,'datalist'=>$datalist]);// search kelimesini de yolluyoruz.
+    }
+
+    // public function addtocart($id)
+    // {
+    //     echo "Add to Cart <br>";
+    //     $data = Product::find($id);
+    //     print_r($data);
+    //     exit();
+
+
+    // }
 
     public function aboutus()
     {
