@@ -1,4 +1,3 @@
-
 @extends('layouts.home')
 
 @section('title', $setting->title)
@@ -7,7 +6,6 @@
     {{$setting->description}}
 @endsection
 @section('keywords', $setting->keywords)
-
 
 @section('content')
     @include('home._slider')

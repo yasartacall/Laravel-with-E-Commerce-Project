@@ -26,15 +26,15 @@ class HomeController extends Controller
     {
         $setting = Setting::first();
         $slider = Product::select('id','title','image','price','slug')->limit(4)->get();
-        #print_r($slider);
-        #exit();
+        // print_r($setting);
+        // exit();
         $data = [
-        'setting'=>$setting,
-        'slider'=>$slider,
-        'page'=>'home'
+        'setting' => $setting,
+        'slider' => $slider,
+        'page' => 'home' // sadece anasayfada page değişkeni dolu gidiyo bu sayede bu değişkenin gittiği yerin anasayfa olduğunu anlıyoruz
         ];
 
-        return view('home.index', ['data'=>$data] );// sadece anasayfada page değişkeni dolu gidiyo bu sayede bu değişkenin gittiği yerin anasayfa olduğunu anlıyoruz
+        return view('home.index', ['data'=>$data] );
     }
 
     public function product($id, $slug) // ürün detay sayfası için

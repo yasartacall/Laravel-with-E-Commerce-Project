@@ -19,17 +19,9 @@ Route::get('/product/{id}/{slug}', [HomeController::class, 'product'])->name('pr
 Route::get('/categoryproducts/{id}/{slug}', [HomeController::class, 'categoryproducts'])->name('categoryproducts');
 //Route::get('/addtocart/{id}', [HomeController::class, 'addtocart'])->name('addtocart');
 Route::post('/getproduct', [HomeController::class, 'getproduct'])->name('getproduct');
-Route::post('/productlist{search}', [HomeController::class, 'productlist'])->name('productlist');
-
-
-// Route::get('/test/{id}', [HomeController::class, 'test'])->where('id','[0-9]+');// parametre alıyor test metodu ile ve where ile sayısal değer olmmasını sağladık
-//Route::get('/test/{id}/{name}', [HomeController::class, 'test'])->whereNumber('id')->whereAlpha('name');
-
+Route::post('/productlist/{search}', [HomeController::class, 'productlist'])->name('productlist');
 
 //Admin
-//Route::get('/admin', [HomeController::class, 'index'])->name('adminhome')->middleware('auth');// bu routea gitmek istersek middleware ile auth kontrolünü geçmen gerek
-//login olmadığımız da yanii auth kontrolünden geçemediğimiz zaman Http altındaki middleware klasöründe ki authenticate kodlarından admin login sayfasına yolluyopruz.
-
 Route::middleware('auth')->prefix('admin')->group(function () { // direkt gruplama yaptık admin ön ekini eklemek zorunda değiliz
 
     Route::get('/', [\App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin_home');
@@ -88,31 +80,14 @@ Route::middleware('auth')->prefix('user')->namespace('user')->group(function () 
 });
 
 
-
-
-
 Route::get('/admin/login', [HomeController::class, 'login'])->name('admin_login');
 Route::post('/admin/logincheck', [HomeController::class, 'logincheck'])->name('admin_logincheck');
 Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
 
 
-
-
-
-
-
-
-
-
-
-
 Route::get('symlink', function() { // sunucu symlink oluşturmaya izin vermediği için resimleri göremiyorduk bu sayede artık görebiliyoruz.
     Artisan::call('storage:link');
 });
-
-
-
-
 
 
 Route::middleware([
