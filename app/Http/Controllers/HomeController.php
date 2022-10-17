@@ -34,7 +34,7 @@ class HomeController extends Controller
         'page' => 'home' // sadece anasayfada page değişkeni dolu gidiyo bu sayede bu değişkenin gittiği yerin anasayfa olduğunu anlıyoruz
         ];
 
-        return view('home.index', ['data'=>$data] );
+        return view('home.index', $data );
     }
 
     public function product($id, $slug) // ürün detay sayfası için
