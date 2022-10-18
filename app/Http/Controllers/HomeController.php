@@ -8,6 +8,7 @@ use App\Models\Setting;
 use App\Models\Message;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\Faq;
 use App\Models\Image;
 use Illuminate\Support\Facades\Auth;
 
@@ -131,9 +132,10 @@ class HomeController extends Controller
         return redirect()->route('contact')->with('success', 'Mesajınız kaydedilmiştir, Teşekkür ederiz');
     }
 
-    public function fag()
+    public function faq()
     {
-        return view('home.about');
+        $datalist = Faq::all()->sortBy('position');
+        return view('home.faq', ['datalist'=>$datalist]);
     }
 
     public function login()

@@ -7,7 +7,7 @@
         <li><a href="{{route('home')}}">Campains</a></li>
         <li><a href="{{route('home')}}">New Products</a></li>
         <li><a href="{{route('references')}}">References</a></li>
-        <li><a href="{{route('fag')}}">FAQ</a></li>
+        <li><a href="{{route('faq')}}">FAQ</a></li>
         <li><a href="{{route('contact')}}">Contact</a></li>         
     </ul>
 </div>
