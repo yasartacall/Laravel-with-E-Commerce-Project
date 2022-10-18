@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\FaqController;
@@ -99,6 +100,28 @@ Route::middleware('auth')->prefix('myaccount')->namespace('myaccount')->group(fu
 
 Route::middleware('auth')->prefix('user')->namespace('user')->group(function () {
     Route::get('/profile', [UserController::class, 'index'])->name('userprofile');
+
+     #Product
+     Route::prefix('product')->group(function () {
+        // Route assigned name "admin.users"...
+        Route::get('/', [ProductController::class, 'index'])->name('user_products');
+        Route::get('create', [ProductController::class, 'create'])->name('user_product_add');
+        Route::post('store', [ProductController::class, 'store'])->name('user_product_store');
+        Route::get('edit/{id}', [ProductController::class, 'edit'])->name('user_product_edit');
+        Route::post('update/{id}', [ProductController::class, 'update'])->name('user_product_update');
+        Route::get('delete/{id}', [ProductController::class, 'destroy'])->name('user_product_delete');
+        Route::get('show', [ProductController::class, 'show'])->name('user_product_show');
+    });
+
+    #Product Image Gallery
+    Route::prefix('image')->group(function () {
+        Route::get('create/{product_id}', [ImageController::class, 'create'])->name('user_image_add');
+        Route::post('store/{product_id}', [ImageController::class, 'store'])->name('user_image_store');
+        Route::get('delete/{id}/{product_id}', [ImageController::class, 'destroy'])->name('user_image_delete');
+        Route::get('show', [ImageController::class, 'show'])->name('admin_image_show');
+    });
+
+    
 });
 
 
