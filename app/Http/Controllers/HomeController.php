@@ -37,11 +37,15 @@ class HomeController extends Controller
     {
         $setting = Setting::first();
         $slider = Product::select('id','title','image','price','slug')->limit(4)->get();
-        // print_r($setting);
-        // exit();
+        $daily = Product::select('id','title','image','price','slug')->limit(6)->inRandomOrder()->get();
+        $last = Product::select('id','title','image','price','slug')->limit(4)->orderByDesc('id')->get();
+        $picked = Product::select('id','title','image','price','slug')->limit(4)->inRandomOrder()->get();
         $data = [
         'setting' => $setting,
         'slider' => $slider,
+        'daily' => $daily,
+        'last' => $last,
+        'picked' => $picked,
         'page' => 'home' // sadece anasayfada page değişkeni dolu gidiyo bu sayede bu değişkenin gittiği yerin anasayfa olduğunu anlıyoruz
         ];
 
@@ -88,15 +92,13 @@ class HomeController extends Controller
         return view('home.search_products',['search'=>$search,'datalist'=>$datalist]);// search kelimesini de yolluyoruz.
     }
 
-    // public function addtocart($id)
-    // {
-    //     echo "Add to Cart <br>";
-    //     $data = Product::find($id);
-    //     print_r($data);
-    //     exit();
-
-
-    // }
+    public function addtocart($id)
+    {
+        echo "Add to Cart <br>";
+        $data = Product::find($id);
+        print_r($data);
+        exit();
+    }
 
     public function aboutus()
     {
