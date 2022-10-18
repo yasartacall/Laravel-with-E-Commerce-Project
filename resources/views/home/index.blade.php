@@ -106,6 +106,7 @@
 								</div>
 								<div class="product-body">
 									<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+									
 									<div class="product-rating">
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star"></i>

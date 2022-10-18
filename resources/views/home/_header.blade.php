@@ -53,8 +53,11 @@
                         @livewire('search') <!-- biz buraya yazamaya başladığımız zaman livewire de ki Search.php ye gidiyo. -->
                         <button type="submit" class="search-btn"><i class="fa fa-search"></i></button>
                     </form>
-                    @livewireScripts <!--livewire in çalışabilmesi için-->
 
+                    @section('footerjs')
+                        @livewireScripts <!--livewire in çalışabilmesi için-->
+                    @endsection
+                    
                 </div>
                 <!-- /Search -->
             </div>
@@ -77,7 +80,7 @@
 
                         <ul class="custom-menu">
                             <li><a href="{{route('myprofile')}} "><i class="fa fa-user-o"></i> My Account</a></li>
-                            <li><a href="#"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
+                            <li><a href="{{route('myreviews')}}"><i class="fa fa-heart-o"></i> My Reviews</a></li>
                             <li><a href="#"><i class="fa fa-exchange"></i> Compare</a></li>
                             <li><a href="#"><i class="fa fa-check"></i> Checkout</a></li>
                             <li><a href="{{route('logout')}}"><i class="fa fa-user-plus"></i> Logout</a></li>

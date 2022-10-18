@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Setting;
 use App\Models\Message;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\Image;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +21,16 @@ class HomeController extends Controller
     public static function getSetting()
     {
         return Setting::first();
+    }
+
+    public static function countreview($id)
+    {
+        return Review::where('product_id', $id)->count();
+    }
+
+    public static function avrgreview($id)
+    {
+        return Review::where('product_id', $id)->average('rate');
     }
 
     public function index()
@@ -41,7 +52,8 @@ class HomeController extends Controller
     {
         $data = Product::find($id);
         $datalist = Image::where('product_id', $id)->get();//detay resimleri için id si bu id olanlar
-        return view('home.product_detail', ['data'=>$data, 'datalist'=>$datalist] );
+        $reviews = Review::where('product_id', $id)->get();// product id si o ürün olan yorumları yani rewiewleri alıyor
+        return view('home.product_detail', ['data'=>$data, 'datalist'=>$datalist, 'reviews'=>$reviews] );
 
     }
 
@@ -59,6 +71,15 @@ class HomeController extends Controller
         {
             return redirect()->route('productlist',['search'=>$search]);
         }
+    }
+
+    public function categoryproducts($id,$slug)
+    {
+        $datalist = Product::where('category_id',$id)->get();
+        $data = Category::find($id);
+        #print_r($data);
+        #exit();
+        return view('home.category_products',['data'=>$data,'datalist'=>$datalist]);
     }
 
     public function productlist($search) //gelen searchü sorguluyoruz tekrar
