@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Review;
+use App\Models\Orderitem;
+use App\Models\Category;
 
 
 class Product extends Model
@@ -20,5 +22,10 @@ class Product extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class); 
+    }
+
+    public function orderitem()
+    {
+        return $this->hasMany(Orderitem::class); 
     }
 }

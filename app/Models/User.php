@@ -11,6 +11,8 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Review;
 use App\Models\Shopcart;
+use App\Models\Order;
+use App\Models\Orderitem;
 
 
 class User extends Authenticatable
@@ -70,5 +72,15 @@ class User extends Authenticatable
     public function shopcart()
     {
         return $this->hasMany(Shopcart::class); 
+    }
+
+    public function order()
+    {
+        return $this->hasMany(Order::class); 
+    }
+
+    public function orderitem()
+    {
+        return $this->hasMany(Orderitem::class); 
     }
 }
