@@ -80,7 +80,7 @@
                                         <div class="product-btns">
                                             <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                                             <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                            <form action="#" method="post">
+                                            <form action="{{route('user_shopcart_add', ['id' => $rs->id])}}" method="post">
                                                 @csrf
                                                 <input name="quantity" type="hidden" value="1">
                                                 <button type="submit"  class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
@@ -140,7 +140,7 @@
                                         <div class="product-btns">
                                             <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                                             <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                            <form action="#" method="post">
+                                            <form action="{{route('user_shopcart_add', ['id' => $rs->id])}}" method="post">
                                                 @csrf
                                                 <input name="quantity" type="hidden" value="1">
                                                 <button type="submit"  class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
@@ -195,9 +195,9 @@
                                         <div class="product-btns">
                                             <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                                             <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                            <form action="#" method="post">
+                                            <form action="{{route('user_shopcart_add', ['id' => $rs->id])}} " method="post"> 
                                                 @csrf
-                                                <input name="quantity" type="hidden" value="1">
+                                                <input name="quantity" type="hidden" value="1"> <!-- direkt anasayfadan eklenirse kaçtane ekleyeceğini seçemeyeceği için direkt 1 -->
                                                 <button type="submit"  class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                                             </form>
                                         </div>

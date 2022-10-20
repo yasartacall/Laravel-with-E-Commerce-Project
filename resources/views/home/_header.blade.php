@@ -5,7 +5,7 @@
     <div id="top-header">
         <div class="container">
             <div class="pull-left">
-                <span>Welcome to E-shop!</span>
+                 @include('home.message')
             </div>
             <div class="pull-right">
                 <ul class="header-top-links">
@@ -93,13 +93,15 @@
                     <!-- Cart -->
                     <li class="header-cart dropdown default-dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                            <a href="{{route('user_shopcart')}} ">
                             <div class="header-btns-icon">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span class="qty">3</span>
+                                <span class="qty"> {{\App\Http\Controllers\ShopcartController::countshopcart()}} </span>
                             </div>
-                            <strong class="text-uppercase">My Cart:</strong>
+                            
+                                <strong class="text-uppercase">My Cart:</strong>
+                            </a>
                             <br>
-                            <span>35.20$</span>
                         </a>
                         <div class="custom-menu">
                             <div id="shopping-cart">
@@ -114,16 +116,7 @@
                                         </div>
                                         <button class="cancel-btn"><i class="fa fa-trash"></i></button>
                                     </div>
-                                    <div class="product product-widget">
-                                        <div class="product-thumb">
-                                            <img src="{{ asset('assets') }}/img/thumb-product01.jpg" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-                                            <h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-                                        </div>
-                                        <button class="cancel-btn"><i class="fa fa-trash"></i></button>
-                                    </div>
+                                    
                                 </div>
                                 <div class="shopping-cart-btns">
                                     <button class="main-btn">View Cart</button>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShopcartController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\FaqController;
@@ -18,7 +19,6 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/sendmessage', [HomeController::class, 'sendmessage'])->name('sendmessage');
 Route::get('/product/{id}/{slug}', [HomeController::class, 'product'])->name('product');
 Route::get('/categoryproducts/{id}/{slug}', [HomeController::class, 'categoryproducts'])->name('categoryproducts');
-//Route::get('/addtocart/{id}', [HomeController::class, 'addtocart'])->name('addtocart');
 Route::post('/getproduct', [HomeController::class, 'getproduct'])->name('getproduct');
 Route::post('/productlist/{search}', [HomeController::class, 'productlist'])->name('productlist');
 
@@ -119,6 +119,15 @@ Route::middleware('auth')->prefix('user')->namespace('user')->group(function () 
         Route::post('store/{product_id}', [ImageController::class, 'store'])->name('user_image_store');
         Route::get('delete/{id}/{product_id}', [ImageController::class, 'destroy'])->name('user_image_delete');
         Route::get('show', [ImageController::class, 'show'])->name('admin_image_show');
+    });
+
+     #Shopcart
+     Route::prefix('shopcart')->group(function () {
+        // Route assigned name "admin.users"...
+        Route::get('/', [ShopcartController::class, 'index'])->name('user_shopcart');
+        Route::post('store/{id}', [ShopcartController::class, 'store'])->name('user_shopcart_add');
+        Route::post('update/{id}', [ShopcartController::class, 'update'])->name('user_shopcart_update');
+        Route::get('delete/{id}', [ShopcartController::class, 'destroy'])->name('user_shopcart_delete');
     });
 
     

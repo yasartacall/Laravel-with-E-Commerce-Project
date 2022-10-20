@@ -10,6 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Review;
+use App\Models\Shopcart;
 
 
 class User extends Authenticatable
@@ -64,5 +65,10 @@ class User extends Authenticatable
     public function reviews()
     {
         return $this->hasMany(Review::class); 
+    }
+
+    public function shopcart()
+    {
+        return $this->hasMany(Shopcart::class); 
     }
 }

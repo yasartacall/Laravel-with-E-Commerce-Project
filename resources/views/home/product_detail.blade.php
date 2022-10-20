@@ -97,13 +97,16 @@
 								</ul>
 							</div>
 
-							<div class="product-btns">
+							<div class="product-btns"> 
+								<form action="{{route('user_shopcart_add', ['id'=> $data->id])}}" method="POST">
+									@csrf
 								<div class="qty-input">
 									<span class="text-uppercase">QTY: </span>
-									<input class="input" type="number">
+									<input class="input" name="quantity" type="number" value="1" max={{$data->quantity}} >
 								</div>
-                                {{-- {{route('addtocart', ['id'=> $data->id])}} --}}
-								<a href="#" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+                                 
+								<button type="submit"  class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart </button>
+								</form>
 								<div class="pull-right">
 									<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 									<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
