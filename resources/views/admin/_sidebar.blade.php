@@ -4,7 +4,7 @@
     <a href="{{ route('admin_home') }}" class="brand-link">
       <img src="{{ asset('assets') }}/admin/dist//img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">Admin YT</span>
+      <span class="brand-text font-weight-light">Barabut Shopping</span>
     </a>
 
     <!-- Sidebar -->
@@ -70,6 +70,58 @@
               <i class="fas fa-circle nav-icon"></i>
               <p>FAQ</p>
             </a>
+          </li>
+
+          <li class="nav-item has-treeview ">
+            <a href="# " class="nav-link ">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Orders
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('admin_orders')}}" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All Orders</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{route('admin_order_list', ['status' => 'new'])}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>New Orders</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{route('admin_order_list', ['status' => 'accepted'])}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Accepted Orders</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{route('admin_order_list', ['status' => 'canceled'])}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Canceled Orders</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{route('admin_order_list', ['status' => 'shipping'])}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Shipping Orders</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin_order_list', ['status' => 'completed'])}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Completed Orders</p>
+                </a>
+              </li>
+            </ul>
           </li>
 
           <li class="nav-header">LABELS</li>

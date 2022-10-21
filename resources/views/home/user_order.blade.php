@@ -29,10 +29,7 @@
                 <!-- MAIN -->
                 
                 <div class="card col-md-10">
-                    <div class="card-header">
-                      <a type="button" class="btn btn-info" href="{{route('user_product_add')}}">Add Product</a>
-                      @include('home.message')
-                    </div>
+                
             
                     <div class="card">
                       <div class="card-body">
