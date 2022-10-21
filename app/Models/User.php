@@ -13,6 +13,7 @@ use App\Models\Review;
 use App\Models\Shopcart;
 use App\Models\Order;
 use App\Models\Orderitem;
+use App\Models\Role;
 
 
 class User extends Authenticatable
@@ -82,5 +83,10 @@ class User extends Authenticatable
     public function orderitem()
     {
         return $this->hasMany(Orderitem::class); 
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
     }
 }

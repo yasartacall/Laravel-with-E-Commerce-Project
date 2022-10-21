@@ -32,7 +32,11 @@ Route::post('/getproduct', [HomeController::class, 'getproduct'])->name('getprod
 Route::post('/productlist/{search}', [HomeController::class, 'productlist'])->name('productlist');
 
 //Admin
-Route::middleware('auth')->prefix('admin')->group(function () { // direkt gruplama yaptık admin ön ekini eklemek zorunda değiliz
+Route::middleware('auth')->prefix('admin')->group(function () { 
+
+    // Admin role
+    Route::middleware('admin')->group(function () { // admin olup olmadığını anlamamız lazıms
+        
 
     Route::get('/', [AdminHomeController::class, 'index'])->name('admin_home');
 
@@ -163,7 +167,7 @@ Route::middleware('auth')->prefix('user')->namespace('user')->group(function () 
         Route::get('show/{id}', [OrderController::class, 'show'])->name('user_order_show');
     });
 
-    
+  });
 });
 
 

@@ -7,10 +7,16 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    public function __construct() // eğer route daa engellemezsek bu şekilde de yapılabilir
+    {
+        $this->middleware('admin');
+    }
+
     public function index()
     {
         return view('admin.index');
     }
+
     public function login()
     {
         return view('admin.login');
