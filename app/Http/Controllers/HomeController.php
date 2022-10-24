@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Setting;
+use App\Models\Message;
+use App\Models\Product;
+use App\Models\Review;
+use App\Models\Faq;
+use App\Models\Image;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -19,10 +24,81 @@ class HomeController extends Controller
         return Setting::first();
     }
 
+    public static function countreview($id)
+    {
+        return Review::where('product_id', $id)->count();
+    }
+
+    public static function avrgreview($id)
+    {
+        return Review::where('product_id', $id)->average('rate');
+    }
+
     public function index()
     {
         $setting = Setting::first();
-        return view('home.index', ['setting'=>$setting, 'page'=>'home']);// sadece anasayfada page değişkeni dolu gidiyo bu sayede bu değişkenin gittiği yerin anasayfa olduğunu anlıyoruz
+        $slider = Product::select('id','title','image','price','slug')->limit(4)->get();
+        $daily = Product::select('id','title','image','price','slug')->limit(6)->inRandomOrder()->get();
+        $last = Product::select('id','title','image','price','slug')->limit(4)->orderByDesc('id')->get();
+        $picked = Product::select('id','title','image','price','slug')->limit(4)->inRandomOrder()->get();
+        $data = [
+        'setting' => $setting,
+        'slider' => $slider,
+        'daily' => $daily,
+        'last' => $last,
+        'picked' => $picked,
+        'page' => 'home' // sadece anasayfada page değişkeni dolu gidiyo bu sayede bu değişkenin gittiği yerin anasayfa olduğunu anlıyoruz
+        ];
+
+        return view('home.index', $data );
+    }
+
+    public function product($id, $slug) // ürün detay sayfası için
+    {
+        $data = Product::find($id);
+        $datalist = Image::where('product_id', $id)->get();//detay resimleri için id si bu id olanlar
+        $reviews = Review::where('product_id', $id)->get();// product id si o ürün olan yorumları yani rewiewleri alıyor
+        return view('home.product_detail', ['data'=>$data, 'datalist'=>$datalist, 'reviews'=>$reviews] );
+
+    }
+
+    public function getproduct(Request $request)
+    {
+        $search=$request->input('search');
+
+        $count = Product::where('title', 'like', '%'.$search.'%')->get()->count();
+        if ($count==1) // gelen search sorgusuna uyan ürün bi tane ise  sorgumuuzu yapıp productdetaile yolladık yukarıya
+        {
+            $data = Product::where('title', 'like', '%'.$search.'%')->first();
+            return redirect()->route('product',['id'=>$data->id,'slug'=>$data->slug]);
+        }
+        else // birden fazla ürün var ise productlist fonk. a yollluyoruz
+        {
+            return redirect()->route('productlist',['search'=>$search]);
+        }
+    }
+
+    public function categoryproducts($id,$slug)
+    {
+        $datalist = Product::where('category_id',$id)->get();
+        $data = Category::find($id);
+        #print_r($data);
+        #exit();
+        return view('home.category_products',['data'=>$data,'datalist'=>$datalist]);
+    }
+
+    public function productlist($search) //gelen searchü sorguluyoruz tekrar
+    {
+        $datalist =Product::where('title', 'like', '%'.$search.'%')->get();
+        return view('home.search_products',['search'=>$search,'datalist'=>$datalist]);// search kelimesini de yolluyoruz.
+    }
+
+    public function addtocart($id)
+    {
+        echo "Add to Cart <br>";
+        $data = Product::find($id);
+        print_r($data);
+        exit();
     }
 
     public function aboutus()
@@ -43,9 +119,23 @@ class HomeController extends Controller
         return view('home.contact', ['setting'=>$setting]);
     }
 
-    public function fag()
+    public function sendmessage(Request $request)
     {
-        return view('home.about');
+        $data = new Message();
+        $data->name = $request->input('name');
+        $data->email = $request->input('email');
+        $data->phone = $request->input('phone');
+        $data->subject = $request->input('subject');
+        $data->message = $request->input('message');
+      
+        $data->save();
+        return redirect()->route('contact')->with('success', 'Mesajınız kaydedilmiştir, Teşekkür ederiz');
+    }
+
+    public function faq()
+    {
+        $datalist = Faq::all()->sortBy('position');
+        return view('home.faq', ['datalist'=>$datalist]);
     }
 
     public function login()

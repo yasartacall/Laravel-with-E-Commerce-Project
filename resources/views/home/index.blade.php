@@ -1,852 +1,219 @@
 @extends('layouts.home')
 
 @section('title', $setting->title)
+@section('description'){{ $setting->description }} @endsection
+@section('keywords',$setting->keywords)
 
-@section('description')
-    {{$setting->description}}
-@endsection
-@section('keywords', $setting->keywords)
 
 
 @section('content')
+
     @include('home._slider')
 
+
+
     <!-- section -->
-	<div class="section">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
-			<div class="row">
-				<!-- banner -->
-				<div class="col-md-4 col-sm-6">
-					<a class="banner banner-1" href="#">
-						<img src="{{ asset('assets') }}/img/banner10.jpg" alt="">
-						<div class="banner-caption text-center">
-							<h2 class="white-color">NEW COLLECTION</h2>
-						</div>
-					</a>
-				</div>
-				<!-- /banner -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- section-title -->
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h2 class="title">Deals Of The Day</h2>
+                        <div class="pull-right">
+                            <div class="product-slick-dots-1 custom-dots"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /section-title -->
 
-				<!-- banner -->
-				<div class="col-md-4 col-sm-6">
-					<a class="banner banner-1" href="#">
-						<img src="{{ asset('assets') }}/img/banner11.jpg" alt="">
-						<div class="banner-caption text-center">
-							<h2 class="white-color">NEW COLLECTION</h2>
-						</div>
-					</a>
-				</div>
-				<!-- /banner -->
+                <!-- banner -->
+                <div class="col-md-3 col-sm-6 col-xs-6">
+                    <div class="banner banner-2">
+                        <img src="{{ asset('assets')}}/img/banner14.jpg" alt="">
+                        <div class="banner-caption">
+                            <h2 class="white-color">NEW<br>COLLECTION</h2>
+                            <button class="primary-btn">Shop Now</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /banner -->
 
-				<!-- banner -->
-				<div class="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3">
-					<a class="banner banner-1" href="#">
-						<img src="{{ asset('assets') }}/img/banner12.jpg" alt="">
-						<div class="banner-caption text-center">
-							<h2 class="white-color">NEW COLLECTION</h2>
-						</div>
-					</a>
-				</div>
-				<!-- /banner -->
+                <!-- Product Slick -->
+                <div class="col-md-9 col-sm-6 col-xs-6">
+                    <div class="row">
+                        <div id="product-slick-1" class="product-slick">
 
-			</div>
-			<!-- /row -->
-		</div>
-		<!-- /container -->
-	</div>
-	<!-- /section -->
+                        @foreach($daily as $rs)
+                            <!-- Product Single -->
+                                <div class="product product-single">
+                                    <div class="product-thumb">
+                                        <div class="product-label">
+                                            <span class="sale">-20%</span>
+                                        </div>
+                                        <ul class="product-countdown">
+                                            <li><span>00 H</span></li>
+                                            <li><span>00 M</span></li>
+                                            <li><span>00 S</span></li>
+                                        </ul>
+                                        <a href="{{route('product',['id' => $rs->id,'slug' => $rs->slug ])}}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
+                                        <img src="{{ Storage::url($rs->image)}}" style="height: 250px"  alt="">
+                                    </div>
+                                    <div class="product-body">
+                                        <h3 class="product-price">{{$rs->price }} <del class="product-old-price">{{$rs->price * 1.2}}</del></h3>
+                                        @php
+                                            $avgrev = \App\Http\Controllers\HomeController::avrgreview($rs->id);
+                                            $countreview = \App\Http\Controllers\HomeController::countreview($rs->id);
+                                        @endphp
+                                        <div class="product-rating">
+                                            <i class="fa fa-star @if ($avgrev<1) -o empty @endif"></i>
+                                            <i class="fa fa-star @if ($avgrev<2) -o empty @endif"></i>
+                                            <i class="fa fa-star @if ($avgrev<3) -o empty @endif"></i>
+                                            <i class="fa fa-star @if ($avgrev<4) -o empty @endif"></i>
+                                            <i class="fa fa-star @if ($avgrev<5) -o empty @endif"></i>
+                                            <i>({{$countreview}})</i>
+                                        </div>
 
-	<!-- section -->
-	<div class="section">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
-			<div class="row">
-				<!-- section-title -->
-				<div class="col-md-12">
-					<div class="section-title">
-						<h2 class="title">Deals Of The Day</h2>
-						<div class="pull-right">
-							<div class="product-slick-dots-1 custom-dots"></div>
-						</div>
-					</div>
-				</div>
-				<!-- /section-title -->
+                                        <h2 class="product-name"><a href="#">{{$rs->title}}</a></h2>
+                                        <div class="product-btns">
+                                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+                                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                            <form action="{{route('user_shopcart_add', ['id' => $rs->id])}}" method="post">
+                                                @csrf
+                                                <input name="quantity" type="hidden" value="1">
+                                                <button type="submit"  class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /Product Single -->
+                            @endforeach
 
-				<!-- banner -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="banner banner-2">
-						<img src="{{ asset('assets') }}/img/banner14.jpg" alt="">
-						<div class="banner-caption">
-							<h2 class="white-color">NEW<br>COLLECTION</h2>
-							<button class="primary-btn">Shop Now</button>
-						</div>
-					</div>
-				</div>
-				<!-- /banner -->
+                        </div>
+                    </div>
+                </div>
+                <!-- /Product Slick -->
+            </div>
+            <!-- /row -->
 
-				<!-- Product Slick -->
-				<div class="col-md-9 col-sm-6 col-xs-6">
-					<div class="row">
-						<div id="product-slick-1" class="product-slick">
-							<!-- Product Single -->
-							<div class="product product-single">
-								<div class="product-thumb">
-									<div class="product-label">
-										<span>New</span>
-										<span class="sale">-20%</span>
-									</div>
-									<ul class="product-countdown">
-										<li><span>00 H</span></li>
-										<li><span>00 M</span></li>
-										<li><span>00 S</span></li>
-									</ul>
-									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-									<img src="{{ asset('assets') }}/img/product01.jpg" alt="">
-								</div>
-								<div class="product-body">
-									<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-									<div class="product-rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-o empty"></i>
-									</div>
-									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
 
-							<!-- Product Single -->
-							<div class="product product-single">
-								<div class="product-thumb">
-									<div class="product-label">
-										<span class="sale">-20%</span>
-									</div>
-									<ul class="product-countdown">
-										<li><span>00 H</span></li>
-										<li><span>00 M</span></li>
-										<li><span>00 S</span></li>
-									</ul>
-									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-									<img src="{{ asset('assets') }}/img/product07.jpg" alt="">
-								</div>
-								<div class="product-body">
-									<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-									<div class="product-rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-o empty"></i>
-									</div>
-									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
 
-							<!-- Product Single -->
-							<div class="product product-single">
-								<div class="product-thumb">
-									<div class="product-label">
-										<span>New</span>
-										<span class="sale">-20%</span>
-									</div>
-									<ul class="product-countdown">
-										<li><span>00 H</span></li>
-										<li><span>00 M</span></li>
-										<li><span>00 S</span></li>
-									</ul>
-									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-									<img src="{{ asset('assets') }}/img/product06.jpg" alt="">
-								</div>
-								<div class="product-body">
-									<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-									<div class="product-rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-o empty"></i>
-									</div>
-									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
+            <!-- section -->
+            <div class="section">
+                <!-- container -->
+                <div class="container">
+                    <!-- row -->
+                    <div class="row">
+                        <!-- section title -->
+                        <div class="col-md-12">
+                            <div class="section-title">
+                                <h2 class="title">Latest Products</h2>
+                            </div>
+                        </div>
+                        <!-- section title -->
+                    @foreach($last as $rs)
+                        <!-- Product Single -->
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <div class="product product-single">
+                                    <div class="product-thumb">
+                                        <a href="{{route('product',['id' => $rs->id,'slug' => $rs->slug ])}}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
+                                        <img src="{{ Storage::url($rs->image)}}" style="height: 250px"alt="">
+                                    </div>
+                                    <div class="product-body">
+                                        <h3 class="product-price">{{$rs->price }} </h3>
+                                        @php
+                                            $avgrev = \App\Http\Controllers\HomeController::avrgreview($rs->id);
+                                            $countreview = \App\Http\Controllers\HomeController::countreview($rs->id);
+                                        @endphp
+                                        <div class="product-rating">
+                                            <i class="fa fa-star @if ($avgrev<1) -o empty @endif"></i>
+                                            <i class="fa fa-star @if ($avgrev<2) -o empty @endif"></i>
+                                            <i class="fa fa-star @if ($avgrev<3) -o empty @endif"></i>
+                                            <i class="fa fa-star @if ($avgrev<4) -o empty @endif"></i>
+                                            <i class="fa fa-star @if ($avgrev<5) -o empty @endif"></i>
+                                            <i>({{$countreview}})</i>
+                                        </div>
 
-							<!-- Product Single -->
-							<div class="product product-single">
-								<div class="product-thumb">
-									<div class="product-label">
-										<span>New</span>
-										<span class="sale">-20%</span>
-									</div>
-									<ul class="product-countdown">
-										<li><span>00 H</span></li>
-										<li><span>00 M</span></li>
-										<li><span>00 S</span></li>
-									</ul>
-									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-									<img src="{{ asset('assets') }}/img/product08.jpg" alt="">
-								</div>
-								<div class="product-body">
-									<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-									<div class="product-rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-o empty"></i>
-									</div>
-									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
-						</div>
-					</div>
-				</div>
-				<!-- /Product Slick -->
-			</div>
-			<!-- /row -->
+                                        <h2 class="product-name"><a href="#">{{$rs->title}}</a></h2>
+                                        <div class="product-btns">
+                                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+                                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                            <form action="{{route('user_shopcart_add', ['id' => $rs->id])}}" method="post">
+                                                @csrf
+                                                <input name="quantity" type="hidden" value="1">
+                                                <button type="submit"  class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Product Single -->
 
-			<!-- row -->
-			<div class="row">
-				<!-- section title -->
-				<div class="col-md-12">
-					<div class="section-title">
-						<h2 class="title">Deals Of The Day</h2>
-						<div class="pull-right">
-							<div class="product-slick-dots-2 custom-dots">
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- section title -->
+                        @endforeach
 
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single product-hot">
-						<div class="product-thumb">
-							<div class="product-label">
-								<span class="sale">-20%</span>
-							</div>
-							<ul class="product-countdown">
-								<li><span>00 H</span></li>
-								<li><span>00 M</span></li>
-								<li><span>00 S</span></li>
-							</ul>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="{{ asset('assets') }}/img/product01.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
 
-				<!-- Product Slick -->
-				<div class="col-md-9 col-sm-6 col-xs-6">
-					<div class="row">
-						<div id="product-slick-2" class="product-slick">
-							<!-- Product Single -->
-							<div class="product product-single">
-								<div class="product-thumb">
-									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-									<img src="{{ asset('assets') }}/img/product06.jpg" alt="">
-								</div>
-								<div class="product-body">
-									<h3 class="product-price">$32.50</h3>
-									<div class="product-rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-o empty"></i>
-									</div>
-									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
+                    </div>
+                    <!-- /row -->
 
-							<!-- Product Single -->
-							<div class="product product-single">
-								<div class="product-thumb">
-									<div class="product-label">
-										<span class="sale">-20%</span>
-									</div>
-									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-									<img src="{{ asset('assets') }}/img/product05.jpg" alt="">
-								</div>
-								<div class="product-body">
-									<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-									<div class="product-rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-o empty"></i>
-									</div>
-									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
 
-							<!-- Product Single -->
-							<div class="product product-single">
-								<div class="product-thumb">
-									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-									<img src="{{ asset('assets') }}/img/product04.jpg" alt="">
-								</div>
-								<div class="product-body">
-									<h3 class="product-price">$32.50</h3>
-									<div class="product-rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-o empty"></i>
-									</div>
-									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
 
-							<!-- Product Single -->
-							<div class="product product-single">
-								<div class="product-thumb">
-									<div class="product-label">
-										<span>New</span>
-										<span class="sale">-20%</span>
-									</div>
-									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-									<img src="{{ asset('assets') }}/img/product03.jpg" alt="">
-								</div>
-								<div class="product-body">
-									<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-									<div class="product-rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-o empty"></i>
-									</div>
-									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
+                    <!-- row -->
+                    <div class="row">
+                        <!-- section title -->
+                        <div class="col-md-12">
+                            <div class="section-title">
+                                <h2 class="title">Picked For You</h2>
+                            </div>
+                        </div>
+                        <!-- section title -->
+                    @foreach($picked as $rs)
+                        <!-- Product Single -->
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <div class="product product-single">
+                                    <div class="product-thumb">
+                                        <a href="{{route('product',['id' => $rs->id,'slug' => $rs->slug ])}}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
+                                        <img src="{{ Storage::url($rs->image)}}" style="height: 250px" alt="">
+                                    </div>
+                                    <div class="product-body">
+                                        <h3 class="product-price">{{$rs->price }} </h3>
+                                        @php
+                                            $avgrev = \App\Http\Controllers\HomeController::avrgreview($rs->id);
+                                            $countreview = \App\Http\Controllers\HomeController::countreview($rs->id);
+                                        @endphp
+                                        <div class="product-rating">
+                                            <i class="fa fa-star @if ($avgrev<1) -o empty @endif"></i>
+                                            <i class="fa fa-star @if ($avgrev<2) -o empty @endif"></i>
+                                            <i class="fa fa-star @if ($avgrev<3) -o empty @endif"></i>
+                                            <i class="fa fa-star @if ($avgrev<4) -o empty @endif"></i>
+                                            <i class="fa fa-star @if ($avgrev<5) -o empty @endif"></i>
+                                            <i>({{$countreview}})</i>
+                                        </div>
 
-						</div>
-					</div>
-				</div>
-				<!-- /Product Slick -->
-			</div>
-			<!-- /row -->
-		</div>
-		<!-- /container -->
-	</div>
-	<!-- /section -->
+                                        <h2 class="product-name"><a href="#">{{$rs->title}}</a></h2>
+                                        <div class="product-btns">
+                                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+                                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                            <form action="{{route('user_shopcart_add', ['id' => $rs->id])}} " method="post"> 
+                                                @csrf
+                                                <input name="quantity" type="hidden" value="1"> <!-- direkt anasayfadan eklenirse kaçtane ekleyeceğini seçemeyeceği için direkt 1 -->
+                                                <button type="submit"  class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Product Single -->
+                        @endforeach
 
-	<!-- section -->
-	<div class="section section-grey">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
-			<div class="row">
-				<!-- banner -->
-				<div class="col-md-8">
-					<div class="banner banner-1">
-						<img src="{{ asset('assets') }}/img/banner13.jpg" alt="">
-						<div class="banner-caption text-center">
-							<h1 class="primary-color">HOT DEAL<br><span class="white-color font-weak">Up to 50% OFF</span></h1>
-							<button class="primary-btn">Shop Now</button>
-						</div>
-					</div>
-				</div>
-				<!-- /banner -->
-
-				<!-- banner -->
-				<div class="col-md-4 col-sm-6">
-					<a class="banner banner-1" href="#">
-						<img src="{{ asset('assets') }}/img/banner11.jpg" alt="">
-						<div class="banner-caption text-center">
-							<h2 class="white-color">NEW COLLECTION</h2>
-						</div>
-					</a>
-				</div>
-				<!-- /banner -->
-
-				<!-- banner -->
-				<div class="col-md-4 col-sm-6">
-					<a class="banner banner-1" href="#">
-						<img src="{{ asset('assets') }}/img/banner12.jpg" alt="">
-						<div class="banner-caption text-center">
-							<h2 class="white-color">NEW COLLECTION</h2>
-						</div>
-					</a>
-				</div>
-				<!-- /banner -->
-			</div>
-			<!-- /row -->
-		</div>
-		<!-- /container -->
-	</div>
-	<!-- /section -->
-
-	<!-- section -->
-	<div class="section">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
-			<div class="row">
-				<!-- section title -->
-				<div class="col-md-12">
-					<div class="section-title">
-						<h2 class="title">Latest Products</h2>
-					</div>
-				</div>
-				<!-- section title -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="{{ asset('assets') }}/img/product01.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50</h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<div class="product-label">
-								<span>New</span>
-								<span class="sale">-20%</span>
-							</div>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="{{ asset('assets') }}/img/product02.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<div class="product-label">
-								<span>New</span>
-								<span class="sale">-20%</span>
-							</div>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="{{ asset('assets') }}/img/product03.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<div class="product-label">
-								<span>New</span>
-							</div>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="{{ asset('assets') }}/img/product04.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50</h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-			</div>
-			<!-- /row -->
-
-			<!-- row -->
-			<div class="row">
-				<!-- banner -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="banner banner-2">
-						<img src="{{ asset('assets') }}/img/banner15.jpg" alt="">
-						<div class="banner-caption">
-							<h2 class="white-color">NEW<br>COLLECTION</h2>
-							<button class="primary-btn">Shop Now</button>
-						</div>
-					</div>
-				</div>
-				<!-- /banner -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<div class="product-label">
-								<span>New</span>
-								<span class="sale">-20%</span>
-							</div>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="{{ asset('assets') }}/img/product07.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<div class="product-label">
-								<span>New</span>
-								<span class="sale">-20%</span>
-							</div>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="{{ asset('assets') }}/img/product06.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<div class="product-label">
-								<span>New</span>
-								<span class="sale">-20%</span>
-							</div>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="{{ asset('assets') }}/img/product05.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-			</div>
-			<!-- /row -->
-
-			<!-- row -->
-			<div class="row">
-				<!-- section title -->
-				<div class="col-md-12">
-					<div class="section-title">
-						<h2 class="title">Picked For You</h2>
-					</div>
-				</div>
-				<!-- section title -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="{{ asset('assets') }}/img/product04.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50</h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<div class="product-label">
-								<span>New</span>
-							</div>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="{{ asset('assets') }}/img/product03.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50</h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<div class="product-label">
-								<span class="sale">-20%</span>
-							</div>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="{{ asset('assets') }}/img/product02.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<div class="product-label">
-								<span>New</span>
-								<span class="sale">-20%</span>
-							</div>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="{{ asset('assets') }}/img/product01.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-			</div>
-			<!-- /row -->
-		</div>
-		<!-- /container -->
-	</div>
-	<!-- /section -->
+                    </div>
+                    <!-- /row -->
+                </div>
+                <!-- /container -->
+            </div>
+            <!-- /section -->
 @endsection
 
-{{-- @section('sidebar')
-    <div class="col-sm-4 col-lg-2 bg-warning" >
-       <ul>
-        <li>Bilgisayar</li>
-        <li>Elektronik</li>
-        <li>Ev Eşyaları</li>
-       </ul>
-    </div>
-@endsection
 
-@section('content')
-    <div class="col-sm-8 col-lg-10">
-        <h1>Slider</h1>
-        zzzzzzzzzzzzzz
-        <br>
-        bbbbbbbbbbbbbb <br>
-        <h1>İçeriklerimiz</h1>
-        dddddddddddddddd <br>
-        kkkkkkkkkkkkkkkk <br>
-    </div>
-@endsection
 
-  --}}

@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<nav class="main-header navbar navbar-expand navbar-dark navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -9,7 +9,7 @@
         <a href="{{ route('admin_home') }}" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
+        <a href="{{ route('admin_message') }}" class="nav-link">Contact Messages</a>
       </li>
     </ul>
 
@@ -24,6 +24,7 @@
         </div>
       </div>
     </form>
+    @include('home.message')
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
