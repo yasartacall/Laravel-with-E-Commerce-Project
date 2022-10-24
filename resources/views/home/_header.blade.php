@@ -71,7 +71,7 @@
                             <div class="header-btns-icon">
                                 <i class="fa fa-user-o"></i>
                             </div>
-                            <strong class="text-uppercase">{{ Auth::user()->name }} <i class="fa fa-caret-down"></i> {{ Auth::user()->roles->pluck('name') }} </strong>
+                            <strong class="text-uppercase">{{ Auth::user()->name }} <i class="fa fa-caret-down"></i>  </strong>
                         </div> <!--Auth varsa kullanıcıyı yazıyoruz -->
                         @endauth
                         @guest <!-- auth yoksa guest yani hiçkimse yani login olunmamış halinde-->

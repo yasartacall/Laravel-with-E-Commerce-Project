@@ -24,6 +24,7 @@
         </div>
       </div>
     </form>
+    @include('home.message')
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">

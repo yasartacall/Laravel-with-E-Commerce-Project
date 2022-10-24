@@ -13,8 +13,9 @@
              $userRoles = Auth::user()->roles->pluck('name');
         @endphp
         @if ($userRoles->contains('admin')) <!-- admin rolüne sahip ise ekstra bu route eklenir değilse görünmez-->
-        <li><a href="{{route('admin_home')}}" target="_blank">Admin Panel</a></li>
+            <li><a href="{{route('admin_home')}}" target="_blank">Admin Panel</a></li>
         @endif
+        <!-- burda rollere göre gösterme yapılabilir. -->
     </ul>
 </div>
 @endauth

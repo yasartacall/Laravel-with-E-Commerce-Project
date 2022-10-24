@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ImageController as AdminImageController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\FaqController;
@@ -114,6 +116,21 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::get('delete/{id}', [AdminOrderController::class, 'destroy'])->name('admin_order_delete');
         Route::get('show/{id}', [AdminOrderController::class, 'show'])->name('admin_order_show');
     });
+
+     #User
+     Route::prefix('user')->group(function () {
+        // Route assigned name "admin.users"...
+        Route::get('/', [AdminUserController::class, 'index'])->name('admin_users');
+        Route::post('create', [AdminUserController::class, 'create'])->name('admin_user_add');
+        Route::post('store', [AdminUserController::class, 'store'])->name('admin_user_store');
+        Route::get('edit/{id}', [AdminUserController::class, 'edit'])->name('admin_user_edit');
+        Route::post('update/{id}', [AdminUserController::class, 'update'])->name('admin_user_update');
+        Route::get('delete/{id}', [AdminUserController::class, 'destroy'])->name('admin_user_delete');
+        Route::get('show/{id}', [AdminUserController::class, 'show'])->name('admin_user_show');
+        Route::get('userrole/{id}', [AdminUserController::class, 'user_roles'])->name('admin_user_roles');
+        Route::post('userrolestore/{id}', [AdminUserController::class, 'user_role_store'])->name('admin_user_role_add');
+        Route::get('userroledelete/{userid}/{roleid}', [AdminUserController::class, 'user_role_delete'])->name('admin_user_role_delete');
+    });
 });
 
 
@@ -166,6 +183,8 @@ Route::middleware('auth')->prefix('user')->namespace('user')->group(function () 
         Route::get('delete/{id}', [OrderController::class, 'destroy'])->name('user_order_delete');
         Route::get('show/{id}', [OrderController::class, 'show'])->name('user_order_show');
     });
+
+    
 
   });
 });

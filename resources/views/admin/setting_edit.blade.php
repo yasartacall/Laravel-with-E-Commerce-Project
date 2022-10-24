@@ -99,26 +99,6 @@
                                             <option>False</option>
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <label >About Us</label>
-                                        <textarea id="aboutus" name="aboutus" >{{$data->aboutus}}</textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label >Contact</label>
-                                        <textarea id="contact" name="contact" >{{$data->contact}}</textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label >References</label>
-                                        <textarea id="references" name="references" >{{$data->references}}</textarea>
-                                    </div>
-                                    <script>
-                                        $(document).ready(function() {
-                                            $('#aboutus').summernote();
-                                            $('#contact').summernote();
-                                            $('#references').summernote();
-                                        });
-                                    </script>
-
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-smtp" role="tabpanel" aria-labelledby="custom-tabs-one-smtp-tab">
                                     <div class="form-group">
@@ -161,13 +141,29 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-about" role="tabpanel" aria-labelledby="custom-tabs-one-about-tab">
-                                   
+                                    <div class="form-group">
+                                        <label >About Us</label>
+                                        <textarea id="aboutus" name="aboutus" >{{$data->aboutus}}</textarea>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-contact" role="tabpanel" aria-labelledby="custom-tabs-one-contact-tab">
-                                    
+                                    <div class="form-group">
+                                        <label >References</label>
+                                        <textarea id="contact" name="contact" >{{$data->contact}}</textarea>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-references" role="tabpanel" aria-labelledby="custom-tabs-one-references-tab">
-                                    
+                                    <div class="form-group">
+                                        <label >references</label>
+                                        <textarea id="references" name="references" >{{$data->references}}</textarea>
+                                    </div>
+                                    <script>
+                                        $(document).ready(function() {
+                                            $('#aboutus').summernote();
+                                            $('#contact').summernote();
+                                            $('#references').summernote();
+                                        });
+                                    </script>
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary">Update Setting</button>
